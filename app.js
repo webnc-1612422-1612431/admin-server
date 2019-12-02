@@ -4,10 +4,34 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 
-var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
+var bodyParser = require("body-parser");
+const passport = require("passport");
+var admin = require("./routes/admin");
+var index = require("./routes/index");
+require("./passport");
 
 var app = express();
+
+var allowCrossDomain = function(req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Credentials", "true");
+  res.header(
+    "Access-Control-Allow-Headers",
+    "Origin,X-Requested-With,Content-Type,Accept,Authorization"
+  );
+  res.header("Access-Control-Allow-Methods", "GET,PUT,POST,DELETE,OPTIONS");
+
+  // allow options method work, ask experts for more
+  if (req.method === "OPTIONS") {
+    return res.status(200).json({});
+  }
+  next();
+};
+
+app.use(allowCrossDomain);
+
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -19,8 +43,8 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/', indexRouter);
-app.use('/users', usersRouter);
+app.use("/admin", admin);
+app.use("/", passport.authenticate("jwt", { session: false }), index);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
