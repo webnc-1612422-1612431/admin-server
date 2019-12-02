@@ -60,8 +60,6 @@ CREATE TABLE IF NOT EXISTS `UberForTutor`.`contract` (
   `state` VARCHAR(45) NULL,
   `revenue` INT NULL,
   PRIMARY KEY (`id`),
-  INDEX `teacherid_idx` (`teacherid` ASC) VISIBLE,
-  INDEX `studentid_idx` (`studentid` ASC) VISIBLE,
   CONSTRAINT `teacherid`
     FOREIGN KEY (`teacherid`)
     REFERENCES `UberForTutor`.`user` (`id`)
@@ -85,7 +83,6 @@ CREATE TABLE IF NOT EXISTS `UberForTutor`.`contractdetail` (
   `enddate` DATETIME NULL,
   `rate` INT NULL,
   PRIMARY KEY (`id`),
-  INDEX `contractid_idx` (`contractid` ASC) VISIBLE,
   CONSTRAINT `contractid`
     FOREIGN KEY (`contractid`)
     REFERENCES `UberForTutor`.`contract` (`id`)
@@ -103,8 +100,7 @@ CREATE TABLE IF NOT EXISTS `UberForTutor`.`complain` (
   `content` LONGTEXT NULL,
   `ishandled` TINYINT NULL,
   PRIMARY KEY (`id`),
-  INDEX `contractid_idx` (`contractid` ASC) VISIBLE,
-  CONSTRAINT `contractid`
+  CONSTRAINT `FK_contractid`
     FOREIGN KEY (`contractid`)
     REFERENCES `UberForTutor`.`contract` (`id`)
     ON DELETE NO ACTION
@@ -120,8 +116,6 @@ CREATE TABLE IF NOT EXISTS `UberForTutor`.`user_skill` (
   `userid` INT NULL,
   `skillid` INT NULL,
   PRIMARY KEY (`id`),
-  INDEX `userid_idx` (`userid` ASC) VISIBLE,
-  INDEX `skillid_idx` (`skillid` ASC) VISIBLE,
   CONSTRAINT `userid`
     FOREIGN KEY (`userid`)
     REFERENCES `UberForTutor`.`user` (`id`)
@@ -144,8 +138,6 @@ CREATE TABLE IF NOT EXISTS `UberForTutor`.`comment` (
   `teacherid` INT NULL,
   `content` LONGTEXT NULL,
   PRIMARY KEY (`id`),
-  INDEX `FK_comment_user_idx` (`userid` ASC) VISIBLE,
-  INDEX `FK_comment_user_teacher_idx` (`teacherid` ASC) VISIBLE,
   CONSTRAINT `FK_comment_user_user`
     FOREIGN KEY (`userid`)
     REFERENCES `UberForTutor`.`user` (`id`)
@@ -169,9 +161,6 @@ CREATE TABLE IF NOT EXISTS `UberForTutor`.`request` (
   `skill` INT NULL,
   `isaccept` TINYINT NULL,
   PRIMARY KEY (`id`),
-  INDEX `FK_request_skill_idx` (`skill` ASC) VISIBLE,
-  INDEX `FK_request_user_teacher_idx` (`teacherid` ASC) VISIBLE,
-  INDEX `FK_request_user_student_idx` (`studentid` ASC) VISIBLE,
   CONSTRAINT `FK_request_skill`
     FOREIGN KEY (`skill`)
     REFERENCES `UberForTutor`.`skill` (`id`)
