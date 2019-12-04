@@ -3,13 +3,11 @@ var UserModels = require("../models/users.model");
 var router = express.Router();
 
 const checkToken = (req, res, next) => {
-  console.log("Đang log");
   const header = req.headers["authorization"];
 
   if (typeof header !== "undefined") {
     const bearer = header.split(" ");
     const token = bearer[1];
-
     req.token = token;
     next();
   } else {
@@ -19,20 +17,10 @@ const checkToken = (req, res, next) => {
 };
 
 /* POST new admin. */
-router.post("/addadmin", checkToken, function(req, res, next) {
-  var entity = {
-    email: req.body.email,
-    password: req.body.password,
-    role: 'admin',
-    fullname: req.body.fullname,
-    avatar: req.body.avatar,
-    address: req.body.address,
-    major: req.body.major,
-    price: req.body.price,
-    introduction: req.body.introduction,
-  }
+router.post("/createadmin", checkToken, function(req, res, next) {
 
-  console.log(entity);
+  var entity = req.body.user;
+  entity.role = 'admin';
 
   UserModels.single(entity.email).then(row => {
     if (row.length === 0) {
