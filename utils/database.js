@@ -2,11 +2,11 @@ var mysql = require('mysql');
 
 var createConnection = () => {
     return mysql.createConnection({
-        host: 'localhost',
+        host: 'sql10.freemysqlhosting.net',
         port: '3306',
-        user: 'root',
-        password: '',
-        database: 'uberfortutor'
+        user: 'sql10314363',
+        password: 'alEh71xttJ',
+        database: 'sql10314363'
     });
 }
 module.exports = {
