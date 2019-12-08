@@ -22,6 +22,13 @@ router.get("/users", function(req, res, next) {
   })
 })
 
+router.get("/users/:id", function(req, res, next) {
+  console.log(req.params["id"]);
+  UserModels.single(req.params["id"]).then(rows => {
+    res.status(200).json(rows);
+  })
+})
+
 /* POST new admin. */
 router.post("/createadmin", checkToken, function(req, res, next) {
 

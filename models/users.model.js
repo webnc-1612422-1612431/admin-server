@@ -12,6 +12,11 @@ module.exports = {
         return db.load(`SELECT * FROM user WHERE email = '${email}'`);
     },
 
+    singleById: id => {
+        console.log(`SELECT * FROM user WHERE id = '${id}'`);
+        return db.load(`SELECT * FROM user WHERE id = '${id}'`);
+    },
+
     // Insert
     add: entity => {
         return db.add(`user`, entity);

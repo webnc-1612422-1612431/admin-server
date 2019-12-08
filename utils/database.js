@@ -1,13 +1,23 @@
 var mysql = require('mysql');
 
 var createConnection = () => {
-    return mysql.createConnection({
+    var remote = mysql.createConnection({
         host: 'sql10.freemysqlhosting.net',
         port: '3306',
         user: 'sql10314363',
         password: 'alEh71xttJ',
         database: 'sql10314363'
     });
+
+    var local = mysql.createConnection({
+        host: 'localhost',
+        port: '3306',
+        user: 'root',
+        password: '',
+        database: 'uberfortutor'
+    });
+
+    return local;
 }
 module.exports = {
     load: sql => {
