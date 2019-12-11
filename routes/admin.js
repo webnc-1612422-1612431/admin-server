@@ -26,28 +26,6 @@ router.post("/login", function(req, res, next) {
   })(req, res);
 });
 
-/* Đăng nhập */
-/*
-router.post("/register", function(req, res, next) {
-  var entity = {
-    email: req.body.email,
-    password: req.body.password,
-    displayname: req.body.displayname,
-    avatar: req.body.avatar
-  };
-
-  UserModels.single(entity.username).then(row => {
-    if (row.length === 0) {
-      UserModels.add(entity).then(() => {
-        res.status(200).json({ username: entity.username });
-      });
-    } else {
-      res.status(400).json({ error: "Đăng ký thất bại, tài khoản đã tồn tại" });
-    }
-  });
-});
-*/
-
 router.post("/profile", function(req, res, next) {
   
   var entity = {

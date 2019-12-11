@@ -38,6 +38,7 @@ module.exports = {
     add: (tablename, entity) => {
         return new Promise((resolve, reject) => {
             var sql = `insert into ${tablename} set ?`;
+            console.log(sql);
             var connection = createConnection();
             connection.connect();
             connection.query(sql, entity, (error, value) => {

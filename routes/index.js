@@ -1,5 +1,6 @@
 var express = require('express');
 var UserModels = require("../models/users.model");
+var SkillsModels = require("../models/skills.model");
 var router = express.Router();
 
 const checkToken = (req, res, next) => {
@@ -20,13 +21,54 @@ router.get("/users", function(req, res, next) {
   UserModels.all().then(rows => {
     res.status(200).json(rows);
   })
-})
+});
 
-router.get("/users/:id", function(req, res, next) {
-  console.log(req.params["id"]);
-  UserModels.single(req.params["id"]).then(rows => {
+router.get("/skills", function(req, res, next) {
+  SkillsModels.all().then(rows => {
     res.status(200).json(rows);
   })
+});
+
+router.post("/skill", function(req, res, next) {
+  var entity = {
+    skill: req.body.newSkill,
+    state: 1
+  }
+  
+  SkillsModels.single(req.body.newSkill).then(rows => {
+    if (rows.length === 0) {
+      SkillsModels.add(entity).then(id => {
+        entity['id'] = id;
+        res.status(200).json({skill: entity});
+      }).catch(error => {
+        console.log(error);
+        res.status(400).json({error: "Thêm kỹ năng thất bại"});
+      })
+    } else {
+      res.status(400).json({error: "Kỹ năng đã tồn tại"});
+    }
+  })
+})
+
+router.post("/deleteskill", function(req, res, next){
+  var entity = req.body;
+
+  SkillsModels.update(entity).then(row => {
+    res.status(200).json({error: "Thành công", skill: row});
+  }).catch(() => {
+    res.status(400).json({error: "Thất bại"                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              });
+  })
+  
+})
+
+router.post("/updateskill", function(req, res, next){
+  var entity = req.body;
+  SkillsModels.update(entity).then(row => {
+    res.status(200).json({error: "Thành công", skill: row});
+  }).catch(() => {
+    res.status(400).json({error: "Thất bại"                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              });
+  })
+  
 })
 
 /* POST new admin. */
