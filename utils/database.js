@@ -17,7 +17,7 @@ var createConnection = () => {
         database: 'uberfortutor'
     });
 
-    return local;
+    return remote;
 }
 module.exports = {
     load: sql => {
