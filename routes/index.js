@@ -1,6 +1,7 @@
 var express = require('express');
 var UserModels = require("../models/users.model");
 var SkillsModels = require("../models/skills.model");
+var ContractsModels = require("../models/contracts.model");
 var router = express.Router();
 
 const checkToken = (req, res, next) => {
@@ -25,6 +26,12 @@ router.get("/users", function(req, res, next) {
 
 router.get("/skills", function(req, res, next) {
   SkillsModels.all().then(rows => {
+    res.status(200).json(rows);
+  })
+});
+
+router.get("/contracts", function(req, res, next) {
+  ContractsModels.all().then(rows => {
     res.status(200).json(rows);
   })
 });
@@ -66,9 +73,17 @@ router.post("/updateskill", function(req, res, next){
   SkillsModels.update(entity).then(row => {
     res.status(200).json({error: "Thành công", skill: row});
   }).catch(() => {
+    res.status(400).json({error: "Thất bại"})                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              });
+  })
+
+router.post("/updateuser", function(req, res, next){
+  var entity = req.body;
+  console.log(entity);
+  UserModels.update(entity).then(user => {
+    res.status(200).json({error: "Thành công", user});
+  }).catch(() => {
     res.status(400).json({error: "Thất bại"                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              });
   })
-  
 })
 
 /* POST new admin. */
