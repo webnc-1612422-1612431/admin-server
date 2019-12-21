@@ -22,11 +22,12 @@ module.exports = {
 
     detail: () => {
         return db.load(`select ct.contractid, u2.fullname as teachername, u1.fullname as studentname,
-        c.revenue, ct.startdate, ct.enddate, co.content, co.ishandled, c.state
+        c.revenue, ct.startdate, ct.enddate, co.content, co.ishandled, c.state, co.id as complainid,
+        (select count(*) from complain c1 where c1.contractid = ct.contractid and c1.ishandled = 0) as numbercomplain
         from contract c join contractdetail ct on c.id = ct.contractid 
-        join complain co on ct.contractid = co.contractid 
-        join user u1 on u1.fullname = c.studentid
-        join user u2 on u2.fullname = c.teacherid
+        left join complain co on ct.contractid = co.contractid 
+        join user u1 on u1.id = c.studentid
+        join user u2 on u2.id = c.teacherid
         `);
     }
 };

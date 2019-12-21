@@ -2,6 +2,7 @@ var express = require('express');
 var UserModels = require("../models/users.model");
 var SkillsModels = require("../models/skills.model");
 var ContractsModels = require("../models/contracts.model");
+var ComplainModels = require("../models/complain.model");
 var router = express.Router();
 
 const checkToken = (req, res, next) => {
@@ -31,7 +32,7 @@ router.get("/skills", function(req, res, next) {
 });
 
 router.get("/contracts", function(req, res, next) {
-  ContractsModels.all().then(rows => {
+  ContractsModels.detail().then(rows => {
     res.status(200).json(rows);
   })
 });
@@ -77,9 +78,20 @@ router.post("/updateskill", function(req, res, next){
   })
 
 router.post("/updateuser", function(req, res, next){
-  var entity = req.body;
+  var entity = req.body.user;
   console.log(entity);
   UserModels.update(entity).then(user => {
+    console.log(user);
+    res.status(200).json({error: "Thành công", user});
+  }).catch(() => {
+    res.status(400).json({error: "Thất bại"                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              });
+  })
+})
+
+router.post("/complain", function(req, res, next){
+  var entity = req.body.complain;
+  console.log(entity);
+  ComplainModels.update(entity).then(user => {
     res.status(200).json({error: "Thành công", user});
   }).catch(() => {
     res.status(400).json({error: "Thất bại"                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              });

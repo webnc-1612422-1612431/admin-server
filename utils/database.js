@@ -56,6 +56,7 @@ module.exports = {
         return new Promise((resolve, reject) => {
             var id = entity[idField];
             delete entity[idField];
+            console.log(entity);
             var sql = `update ${tablename} set ? where ${idField} = ?`;
             var connection = createConnection();
             connection.connect();
