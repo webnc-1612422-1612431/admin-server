@@ -123,4 +123,18 @@ router.get("/me", checkToken, function(req, res, next) {
   res.json(req.user);
 });
 
+router.post("/chartdata",  function(req, res, next){
+  const {type} = req.body;
+  console.log(type);
+  ContractsModels.detailByType(type).then(rows => {
+    if (type === 'date' || type === 'week')
+    for (let i = 0; i < rows.length; i++){
+      rows[i].date = (rows[i].date + "").substring(0,10);
+    }
+    res.status(200).json({chartData: rows});
+  }).catch(err => {
+    res.status(400).json({err});
+  });
+});
+
 module.exports = router;
