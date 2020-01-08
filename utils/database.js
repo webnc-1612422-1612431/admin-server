@@ -25,7 +25,7 @@ var createConnection = () => {
         database: 'K7n15LVrFb'
     });
 
-    return remoteMysql;
+    return local;
 }
 module.exports = {
     load: sql => {
