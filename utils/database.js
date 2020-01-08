@@ -64,7 +64,7 @@ module.exports = {
                 if (error)
                     reject(error);
                 else {
-                    resolve(value.changeRows);
+                    resolve(id);
                 }
                 connection.end();
             });

@@ -50,5 +50,32 @@ module.exports = {
             FROM contractdetail ct join contract c on ct.contractid = c.id
             GROUP BY YEAR(ct.enddate)`);
         }
+    },
+
+    salesByTeacher: number => {
+            return db.load(`select c.teacherid, sum(c.revenue) as sales, u.*
+            from contract c join contractdetail ct on c.id = ct.contractid
+            join user u on c.teacherid = u.id
+            where DATEDIFF(now(), ct.enddate) < ${number}
+            group by c.teacherid
+            order by sales desc`);
+    },
+
+    salesBySkill: number => {
+        return db.load(`select sum(c.revenue) as sales, s.skill, count(c.skill) as contract, (select count(us.userid) from user_skill us group by us.skillid) as users
+        from contract c join skill s on c.skill = s.id join contractdetail ct on c.id = ct.contractid
+        where DATEDIFF(now(), ct.enddate) <  ${number}
+        group by c.skill
+        order by sales desc`
+        );
+    },
+
+    totalSales: number => {
+        return db.load(`select sum(c.revenue) as sales 
+        from contract c`);
+    },
+
+    totalContracts: () => {
+        return db.load(`select count(*) as contracts from contract`);
     }
 };

@@ -8,7 +8,9 @@ var bodyParser = require("body-parser");
 const passport = require("passport");
 var admin = require("./routes/admin");
 var index = require("./routes/index");
+var appa = require("./firebaseCfg");
 require("./passport");
+
 
 var app = express();
 
@@ -42,6 +44,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+
 
 app.use("/admin", admin);
 app.use("/", passport.authenticate("jwt", { session: false }), index);

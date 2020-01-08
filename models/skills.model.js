@@ -24,5 +24,9 @@ module.exports = {
 
     update: entity => {
         return db.update(`skill`, `id`, entity);
+    },
+
+    totalSkills: () => {
+        return db.load(`select count(*) as skills from skill`);
     }
 };
