@@ -41,19 +41,21 @@ module.exports = {
         if (type == 'date'){
             return db.load(`SELECT c.enddate as date, sum(c.revenue) as sales
             FROM contract c
-            GROUP BY c.enddate`);
+            GROUP BY c.enddate
+            ORDER BY c.enddate`);
         } else if (type == 'week'){
             return db.load(`SELECT DATE_ADD(c.enddate, INTERVAL(1-DAYOFWEEK(c.enddate)) DAY) as date, sum(c.revenue) as sales
             FROM contract c
             GROUP BY CONCAT(YEAR(c.enddate), '/', WEEK(c.enddate))`);
         } else if (type == 'month'){
-            return db.load(`SELECT MONTH(c.enddate) as month, sum(c.revenue) as sales
+            return db.load(`SELECT MONTH(c.enddate) as month, YEAR(c.enddate) as year, sum(c.revenue) as sales
             FROM contract c
-            GROUP BY MONTH(c.enddate)`);
+            GROUP BY YEAR(c.enddate), MONTH(c.enddate)`);
         } else if (type == 'year'){
             return db.load(`SELECT YEAR(c.enddate) as year, sum(c.revenue) as sales
             FROM contract c
-            GROUP BY YEAR(c.enddate)`);
+            GROUP BY YEAR(c.enddate)
+            ORDER BY YEAR(c.enddate)`);
         }
     },
 
