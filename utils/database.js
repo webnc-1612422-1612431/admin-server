@@ -17,7 +17,15 @@ var createConnection = () => {
         database: 'uberfortutor'
     });
 
-    return local;
+    var remoteMysql = mysql.createConnection({
+        host: 'remotemysql.com',
+        port: '3306',
+        user: 'K7n15LVrFb',
+        password: 'URsvbRQ06D',
+        database: 'K7n15LVrFb'
+    });
+
+    return remoteMysql;
 }
 module.exports = {
     load: sql => {
