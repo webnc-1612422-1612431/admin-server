@@ -18,5 +18,13 @@ module.exports = {
 
     update: entity => {
         return db.update(`complain`, `id`, entity);
+    },
+
+    updateByContractId: entity => {
+        return db.update(`complain`, `contractid`, entity)
+    },
+
+    allByContractId: id => {
+        return db.load(`SELECT * FROM complain WHERE contractid = ${id}`);
     }
 };

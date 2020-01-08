@@ -3,7 +3,7 @@ module.exports = {
 
     // Get all
     all: ()=>{
-        return db.load('SELECT * FROM skill');
+        return db.load('SELECT s.*, (select count(*) from user_skill us where us.skillid = s.id) as used FROM skill s');
     },
 
     // Get by name

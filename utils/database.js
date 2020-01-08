@@ -38,7 +38,6 @@ module.exports = {
     add: (tablename, entity) => {
         return new Promise((resolve, reject) => {
             var sql = `insert into ${tablename} set ?`;
-            console.log(sql);
             var connection = createConnection();
             connection.connect();
             connection.query(sql, entity, (error, value) => {
@@ -56,7 +55,6 @@ module.exports = {
         return new Promise((resolve, reject) => {
             var id = entity[idField];
             delete entity[idField];
-            console.log(entity);
             var sql = `update ${tablename} set ? where ${idField} = ?`;
             var connection = createConnection();
             connection.connect();
